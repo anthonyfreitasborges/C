@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <locale.h>
+
 
 
 
@@ -16,6 +18,8 @@ int verificarSenha(char senha[]){
 }
 
 int functionlogin(int n1){
+    setlocale(LC_ALL, "Portuguese");
+
     char senha[11];
     int i1=-1,erro=0;
     printf("LOGIN\n");
@@ -56,15 +60,24 @@ atingir 500 litros ("Atingindo atmosfera superior") e 100 litros ("Quase em
 Desafio: tente controlar cada iteração para acontecer de 0,5 em 0,5 segundos.
 8
  */
-    if(escolhamenu==2){
-        int inicio=1000;
-    }
- 
- 
+
+
+
+
   return 0;
 };
 int main()
-{
+{       setlocale(LC_ALL, "Portuguese");
+
+int inicio=1000;
+    for(int interacao=0;interacao<=inicio;interacao++){
+            inicio=inicio-50;
+        printf("interacao %d e %d litros\n",interacao,inicio);
+    if(inicio==500){
+        printf("Atingindo atmosfera superior");
+    }if(inicio==100){
+    printf("quase em orbita");}
+    }
     int escolha, menuPonto=1;
         functionlogin(2);
         do{
@@ -89,5 +102,7 @@ int main()
             break;
         }
     }while(menuPonto<2);
+
+
     return 0;
 }
