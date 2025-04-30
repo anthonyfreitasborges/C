@@ -51,24 +51,20 @@ apresentado repetidamente até que o usuário escolha a opção de saída.
 • Validar entradas e chamar funções específicas por opção.
 7
 */
+float entradaDistancia(){
+       int distanciaUsuario,angulo;
+        printf("digite uma distancia em km \n");
+        scanf("%d",&distanciaUsuario);
+        return distanciaUsuario;
+}
+float operacaoDistancia(){
+    float distanciaUsuario=entradaDistancia();
+    float angulo = distanciaUsuario * 0.42 + 18;
+        return angulo;
+
+}
 int entrandoMenu(int escolhamenu){
-    /*Criar uma função que simula a queima progressiva de combustível, iniciando com
-1000 litros. A cada iteração, devem ser consumidos 50 litros e exibida a
-quantidade restante. Exibir mensagens específicas em momentos-chave, como ao
-atingir 500 litros ("Atingindo atmosfera superior") e 100 litros ("Quase em
-órbita").
-Desafio: tente controlar cada iteração para acontecer de 0,5 em 0,5 segundos.
-8
- */
-
-
-
-
-  return 0;
-};
-int main()
-{       setlocale(LC_ALL, "Portuguese");
-
+    if(escolhamenu ==2){
 int inicio=1000;
     for(int interacao=0;interacao<=inicio;interacao++){
             inicio=inicio-50;
@@ -76,13 +72,28 @@ int inicio=1000;
     if(inicio==500){
         printf("Atingindo atmosfera superior");
     }if(inicio==100){
-    printf("quase em orbita");}
+    printf("quase em orbita");}} 
     }
+    if(escolhamenu==3){
+           printf(":: %f\n",entradaDistancia());
+            printf(":: %f\n",operacaoDistancia());
+
+    }
+    if(escolhamenu==4){
+        
+    }
+  return 0;
+};
+int main()
+
+{       setlocale(LC_ALL, "Portuguese");
     int escolha, menuPonto=1;
         functionlogin(2);
         do{
         printf("ESCOLHA UM DOS MENUS:\n");
-        printf("menu 1 \n menu 2(Queima de Combustível) \n menu 3(Cálculo de Trajetória) \n sair 4 \n");
+        printf("2. Simular Queima de Combustível \n 3. Calcular Ângulo de Trajetória \n 4. Calcular Gravidade em Planeta \n");
+        printf("5. Registrar Missão \n 6. Ver Histórico de Missões \n 6. Calcular Energia para Emergência (Recursivo)\n");
+        printf("7. Ordenar Missões por Distância \n 8. Missão Final");
         scanf("%d",&escolha);
         switch (escolha){
         case 1:
