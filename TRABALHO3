@@ -1,0 +1,47 @@
+#include <stdio.h>
+#include <stdlib.h>
+typedef struct{
+    int id;
+    char nome[10];
+    int idade;
+    int cpf;
+    int plano;
+}cadastro;
+
+int main(){
+    int n1,cpfCorreto;
+    printf("digite quantas pessesoas vao ser cadastrada\n");
+    scanf("%d",&n1);
+    cadastro passiente[n1];
+    for(int i=0;i<n1;i++){
+        printf("digite os pacientes %d\n",i);
+        printf("digite o nome\n");
+        scanf("%s",passiente[i].nome);
+
+     printf("digite a idade \n");
+    scanf("%d",&passiente[i].idade);
+    for(int t=0;t<i;t++){
+        if(passiente[i].idade<0){
+        printf("idade errada\n digite novamente\n");
+        scanf("%d",&passiente[i].idade);
+        if(passiente[i].idade<0){
+            t--;}
+        }
+    }
+     printf("digite o cpf \n");
+    scanf("%d",&passiente[i].cpf);
+    for(int y=0;y<i;y++){
+        if(passiente[y].cpf == passiente[i].cpf){
+        printf("cpf ja foi usado digite um outro\n");
+        int temp=passiente[i].cpf;
+        scanf("%d",&passiente[i].cpf);
+        if(passiente[i].cpf==temp){
+            y--;}
+        }
+    }
+       printf("tem plano (0-nao, 1-sim) \n");
+    scanf("%d",&passiente[i].plano);
+
+    }
+return 0;
+}
