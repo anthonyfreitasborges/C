@@ -8,40 +8,99 @@ typedef struct{
     int plano;
 }cadastro;
 
-int main(){
-    int n1,cpfCorreto;
-    printf("digite quantas pessesoas vao ser cadastrada\n");
+typedef struct{
+    int id;
+    char nome[20];
+    int crm;
+    char especialidade[30];
+    char disponibilidade[10];
+}medico;
+
+void cadastarPacientes(){
+	int n1,t,y,*pn1;
+	 printf("digite quantas pessesoas vao ser cadastrada\n");
     scanf("%d",&n1);
+    pn1=&n1;
     cadastro passiente[n1];
     for(int i=0;i<n1;i++){
-        printf("digite os pacientes %d\n",i);
+        printf("digite os paciente %d\n",i);
         printf("digite o nome\n");
-        scanf("%s",passiente[i].nome);
-
-     printf("digite a idade \n");
-    scanf("%d",&passiente[i].idade);
-    for(int t=0;t<i;t++){
-        if(passiente[i].idade<0){
-        printf("idade errada\n digite novamente\n");
-        scanf("%d",&passiente[i].idade);
-        if(passiente[i].idade<0){
-            t--;}
-        }
-    }
+        getchar();
+		fgets(passiente[i].nome,20,stdin);
+     	printf("digite a idade \n");
+     	scanf("%d",&passiente[i].idade);
+     		do{
+  	  			if(passiente[i].idade<0){
+       		 	printf("idade invalida \n digite novamente\n");
+        		scanf("%d",&passiente[i].idade);
+        		if(passiente[i].idade<0){
+            	t=1;
+        		}else{
+        			t=0;}
+		     	}   
+            }
+	  while(t !=0);
      printf("digite o cpf \n");
-    scanf("%d",&passiente[i].cpf);
-    for(int y=0;y<i;y++){
-        if(passiente[y].cpf == passiente[i].cpf){
-        printf("cpf ja foi usado digite um outro\n");
-        int temp=passiente[i].cpf;
-        scanf("%d",&passiente[i].cpf);
-        if(passiente[i].cpf==temp){
-            y--;}
-        }
+    	scanf("%d",&passiente[i].cpf);
+   		 for(int y=0;y<i;y++){
+        	if(passiente[y].cpf == passiente[i].cpf){
+        		printf("cpf ja foi usado digite um outro\n");
+        		int temp=passiente[i].cpf;
+        		scanf("%d",&passiente[i].cpf);
+        		if(passiente[i].cpf==temp){
+            	y--;}
+        	}
     }
        printf("tem plano (0-nao, 1-sim) \n");
-    scanf("%d",&passiente[i].plano);
+    	scanf("%d",&passiente[i].plano);
 
     }
+}
+
+void cadastrarMedicos(){
+	int n2,temp=0;
+	printf("digite quantos medicos vao ser cadastrados\n");
+    scanf("%d",&n2);
+	medico doutor[n2];
+	for(int i=0;i<n2;i++){
+		printf("digite o nome do medico\n");
+		getchar();
+		fgets(doutor[i].nome,20,stdin);
+	    printf("digite o CRM do medico \n");
+        scanf("%d",&doutor[i].crm);
+        if(i>0){
+        	 for(int y=0;y<i;y++){
+        	 if(doutor[y].crm == doutor[i].crm){
+        		printf("CRM ja foi usado digite um outro\n");
+        		int temp=doutor[i].crm;
+        		scanf("%d",&doutor[i].crm);
+        		if(doutor[i].crm==temp){
+            	y--; }
+        	}
+		 }
+		}
+        printf("digite a especialidade do medico\n");
+		getchar();
+		fgets(doutor[i].especialidade,30,stdin);
+		printf("digite a disponibilidade do medico\n");
+		getchar();
+		fgets(doutor[i].disponibilidade,10,stdin);
+	}
+}
+
+void mostrarDados(pn2){
+	int tee;
+	tee=pn2;
+	for(int z=0;z<tee;z++){
+		printf("deu bom?");
+	}
+}
+int main(){
+    /*cadastarPacientes();
+    cadastrarMedicos();*/
+    int *pn2, iio=2;
+    pn2=iio;
+    mostratdados(&pn2);
+   
 return 0;
 }
