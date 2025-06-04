@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 typedef struct{
-    int id;
+    int id[30];
     char nome[10];
     int idade;
     int cpf;
@@ -9,19 +9,23 @@ typedef struct{
 }cadastro;
 
 typedef struct{
-    int id;
+    int id[30];
     char nome[20];
     int crm;
     char especialidade[30];
     char disponibilidade[10];
 }medico;
 
-void cadastarPacientes(){
-	int n1,t,y,*pn1;
-	 printf("digite quantas pessesoas vao ser cadastrada\n");
-    scanf("%d",&n1);
-    pn1=&n1;
-    cadastro passiente[n1];
+typedef struct{
+    int idConsulta[10];
+    int idPaciente[10];
+    int idMedico[10];
+    int data;
+}campo;
+
+int cadastarPacientes(cadastro *passiente,int n1){
+	int t,y;
+
     for(int i=0;i<n1;i++){
         printf("digite os paciente %d\n",i);
         printf("digite o nome\n");
@@ -37,7 +41,7 @@ void cadastarPacientes(){
             	t=1;
         		}else{
         			t=0;}
-		     	}   
+		     	}
             }
 	  while(t !=0);
      printf("digite o cpf \n");
@@ -55,13 +59,13 @@ void cadastarPacientes(){
     	scanf("%d",&passiente[i].plano);
 
     }
+
+
+    return n1;
 }
 
-void cadastrarMedicos(){
-	int n2,temp=0;
-	printf("digite quantos medicos vao ser cadastrados\n");
-    scanf("%d",&n2);
-	medico doutor[n2];
+int cadastrarMedicos(medico *doutor,int n2){
+	int temp=0;
 	for(int i=0;i<n2;i++){
 		printf("digite o nome do medico\n");
 		getchar();
@@ -88,19 +92,60 @@ void cadastrarMedicos(){
 	}
 }
 
-void mostrarDados(pn2){
-	int tee;
-	tee=pn2;
-	for(int z=0;z<tee;z++){
-		printf("deu bom?");
-	}
+
+
+void mostrarDados(cadastro *passiente,medico *doutor, int n1,int n2) {
+    printf("\n--- Lista de Pacientes ---\n");
+    for (int i = 0; i < n1; i++) {
+        printf("ID: %d\n", passiente[i].id);
+        printf("Nome: %s\n", passiente[i].nome);
+        printf("Idade: %d\n", passiente[i].idade);
+        printf("CPF: %d\n", passiente[i].cpf);
+        printf("Plano: %s\n", passiente[i].plano ? "Sim" : "Não");
+        printf("----------------------------\n");
+    }
+    printf("\n--- Lista de medicos ---\n");
+    for (int in = 0; in < n2; in++) {
+        printf("ID: %d\n",doutor[in].id);
+        printf("Nome: %s\n", doutor[in].nome);
+        printf("CRM: %d\n", doutor[in].crm);
+        printf("ESPECIALIDADE: %s\n", doutor[in].especialidade);
+        printf("DISPONIBILIDADE: %s\n", doutor[in].disponibilidade);
+        printf("----------------------------\n");
+    }
 }
 int main(){
-    /*cadastarPacientes();
-    cadastrarMedicos();*/
-    int *pn2, iio=2;
-    pn2=iio;
-    mostratdados(&pn2);
-   
+    int escolha,n1,n2,passienteCadastrado=0;
+    cadastro *passiente;
+     medico *doutor;
+    printf("MENU\n");
+    do{
+            printf("1-CADASTRAR PACIENTE\n");
+            printf("2-CADASTRAR MEDICO\n");
+            printf("3-EXIBIR CADASTROS\n");
+            printf("4-SAIR DO MENU\n");
+        scanf("%d",&escolha);
+    switch(escolha){
+    case 1:
+        printf("digite quantas pessesoas vao ser cadastrada\n");
+    scanf("%d",&n1);
+        passiente= (cadastro*)malloc(n1*sizeof(cadastro));
+        cadastarPacientes(passiente, n1);
+        break;
+    case 2:
+        printf("digite quantos medicos vao ser cadastrados\n");
+        scanf("%d",&n2);
+        doutor=(medico*)malloc(n2*sizeof(medico));
+        cadastrarMedicos(doutor,n2);
+        break;
+    case 3:
+         mostrarDados(passiente,doutor,n1,n2);
+         break;
+    }
+    }while(escolha!=4);
+
+    free(passiente);
+    free(doutor);
+
 return 0;
 }
