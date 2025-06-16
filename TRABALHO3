@@ -78,7 +78,7 @@ int cadastarPacientes(cadastro *passiente,int inicio, int n1){
     return n1;
 }
 
-int cadastrarMedicos(medico *doutor,int n2){
+void  cadastrarMedicos(medico *doutor,int n2){
 	int temp=0;
 	for(int i=0;i<n2;i++){
         doutor[i].id=i;
@@ -132,12 +132,14 @@ void mostrarDados(cadastro *passiente,medico *doutor, int n1,int n2) {
 
 
 
- void cadastarConsulta(cadastro *passiente,agendar *consulta,medico *doutor,int ct,int maxCon,int maxPac){
+ void cadastarConsulta(cadastro *passiente,agendar *consulta,medico *doutor,int ct,int maxCon,int maxPac,int maxMed){
      int num1,num2;
-     char data[10];
-     char hora[5];
+     char data[11];
+     char hora[6];
         printf("agendar consulta \n");
         for(int i=maxCon;i<ct;i++){
+            consulta[i].idConsulta=i;
+             printf("%d id da consulta a ser agendado:\n",consulta[i].idConsulta);
             printf("digite o id do paciente a ser agendado:\n");
             scanf("%d",&num1);
             for(int z=0;z<maxPac;z++){
@@ -147,30 +149,27 @@ void mostrarDados(cadastro *passiente,medico *doutor, int n1,int n2) {
             }
             printf("digite o id do medico a ser agendado:\n");
             scanf("%d",&num2);
-            for(int y=0;y<=maxPac;y++){
+            for(int y=0;y<=maxMed;y++){
                 if(num2==doutor[y].id){
                     consulta[i].idMedico=num2;
                 }
             }
 
-            printf("          consulta a ser agendada\n");
-            printf("digite a data d/m/a :\n");
-            getchar();
-            fgets(consulta[i].data,10,stdin);
-            consulta[i].data[strcspn(consulta[i].data, "\n")] = '\0';
-            printf("digite a hora h:m :\n");
-            getchar();
-            fgets(consulta[i].hora,5,stdin);
-            consulta[i].hora[strcspn(consulta[i].hora, "\n")] = '\0';
+            printf("          Consulta a ser agendada\n");
+            printf("Digite a data (dd/mm/aaaa):\n");
+            scanf("%10s", consulta[i].data);
+            printf("Digite a hora (hh:mm):\n");
+            scanf("%5s", consulta[i].hora);
             if(maxCon==0){
                 printf("primeira consulta feita");
-            }else{
+            }else if(maxCon>0){
             for(int d=0;d<maxPac;d++){
-                if(strcmp(consulta[i].data,consulta[d].data)==0 && strcmp(consulta[i].hora,consulta[d].hora)==0){
+                if(consulta[i].idMedico == consulta[d].idMedico && strcmp(consulta[i].data, consulta[d].data) == 0 && strcmp(consulta[i].hora, consulta[d].hora) == 0){
+
                     printf("invalido data com esse horario ja foi preenchida,digite um outro horario:");
-                    char temp1[5];
+                    char temp1[6];
                     strcpy(temp1, consulta[i].hora);
-                    scanf("%s",&consulta[i].hora);
+                    scanf("%s",consulta[i].hora);
                     if(strcmp(consulta[i].hora,temp1)==0){
                         d--;
                     }
@@ -181,20 +180,118 @@ void mostrarDados(cadastro *passiente,medico *doutor, int n1,int n2) {
  }
 
 
+void exibirConsulta(agendar *consulta,int totalPacientes,cadastro *passiente,medico*doutor,int totalconsulta){
+
+    int opcao,n1;
+    printf("digite 1 para consultar por id do paciente \n digite 2 para consultar por id do medico\n");
+    scanf("%d",&opcao);
+    switch(opcao){
+        case 1:
+                printf("digite o id do paciente: ");
+                scanf("%d",&n1);
+                for(int g=0;g<totalconsulta;g++){
+                    if(n1==consulta[g].idPaciente){
+                        printf("EXIBINDO O AGENDAMENTO DA CONSULTA DO PACIENTE\n");
+                        puts(consulta[g].data);
+                        printf("\n");
+                        puts(consulta[g].hora);
+                        printf("\n");
+                        for (int j = 0; j < totalPacientes; j++) {
+                                if (passiente[j].id == consulta[g].idPaciente) {
+                                puts(passiente[j].nome);
+                                    break;}}
+                        g=totalconsulta;
+                    }
+                }
+        break;
+        case 2:
+            printf("digite o id do medico: ");
+                scanf("%d",&n1);
+                for(int g=0;g<totalconsulta;g++){
+                    if(n1==consulta[g].idMedico){
+                        printf("EXIBINDO O AGENDAMENTO DA CONSULTA DO MEDICO\n");
+                        puts(consulta[g].data);
+                        puts(consulta[g].hora);
+                        puts(passiente[g].nome);
+
+                    }
+                }
+        break;
+    }
+}
+
+int excluirConsulta(agendar *consulta,int totalconsulta){
+int nu1;
+ printf("o total de consultas %d \n",totalconsulta);
+  printf("informe o id da consulta que vc quer excluir \n");
+  scanf("%d",&nu1);
+  for(int i=0;i<totalconsulta;i++){
+    if(nu1== consulta[i].idConsulta){
+        printf("excluindo a consuta com id %d\n",consulta[i].idConsulta);
+        for(int y=i;y<totalconsulta-1;y++){
+            consulta[y]=consulta[y+1];
+        }
+    }
+  }
+  totalconsulta--;
+    return totalconsulta;
+ }
+
+void ordenarConsulta(agendar *consulta, int total){
+        printf("consulta desordenadas\n");
+        for(int i=0;i<total;i++){
+            printf(" id da consulta %d",consulta[i].idConsulta);
+            printf("\n id do paciente %d",consulta[i].idPaciente);
+            printf("\n id do medico %d",consulta[i].idMedico);
+            printf("\n data %s",consulta[i].data);
+            printf("\n hora %s",consulta[i].hora);
+            printf("\n - - - -\n");
+        }
+
+    printf("Consultas ordenadas por data e hora com sucesso.\n");
+    for (int i = 0; i < total - 1; i++) {
+        for (int j = 0; j < total - i - 1; j++) {
+            // Primeiro compara a data
+            int cmpData = strcmp(consulta[j].data, consulta[j + 1].data);
+            // Se a data for igual, compara a hora
+            int cmpHora = strcmp(consulta[j].hora, consulta[j + 1].hora);
+
+            if (cmpData > 0 || (cmpData == 0 && cmpHora > 0)) {
+                // Troca
+                agendar temp = consulta[j];
+                consulta[j] = consulta[j + 1];
+                consulta[j + 1] = temp;
+            }
+        }
+    }
+
+    for(int i=0;i<total;i++){
+            printf(" id da consulta %d",consulta[i].idConsulta);
+            printf("\n id do paciente %d",consulta[i].idPaciente);
+            printf("\n id do medico %d",consulta[i].idMedico);
+            printf("\n data %s",consulta[i].data);
+            printf("\n hora %s",consulta[i].hora);
+            printf("\n - - - -\n");
+        }
+}
+
 int main() {
     int escolha, n1, n2,ct=0,totalconsulta=0;
-    int totalPacientes = 0, totalMedicos = 0;
+    int totalPacientes = 0, totalMedicos = 0, tamanhoConsulta;
     cadastro *passiente = NULL;
     medico *doutor = NULL;
     agendar *consulta=NULL;
-    printf("MENU\n");
+    printf("\nMENU\n");
 
     do {
-        printf("1-CADASTRAR PACIENTE\n");
+        printf("\n1-CADASTRAR PACIENTE\n");
         printf("2-CADASTRAR MEDICO\n");
         printf("3-EXIBIR CADASTROS\n");
         printf("4-CADASTRAR CONSULTA\n");
-        printf("5-SAIR DO MENU\n");
+        printf("5-EXIBIR CONSULTA POR ID MEDICO OU ID PACIENTE:\n");
+        printf("6-EXCLUIR CONSULTA\n");
+        printf("7-ORDENAR CONSULTAS\n");
+        printf("8-SAIR DO MENU\n");
         scanf("%d", &escolha);
 
         switch (escolha) {
@@ -236,14 +333,29 @@ int main() {
         case 4:
             ct++;
             consulta = realloc(consulta,ct * sizeof(agendar));
-            cadastarConsulta(passiente,consulta,doutor,ct,totalconsulta,totalPacientes);
+            cadastarConsulta(passiente,consulta,doutor,ct,totalconsulta,totalPacientes,totalMedicos);
             totalconsulta=ct;
             break;
+        case 5:
+            exibirConsulta(consulta,totalPacientes,passiente,doutor,totalconsulta);
+            break;
+        case 6:
+            totalconsulta=excluirConsulta(consulta,totalconsulta);
+            agendar *temp = realloc(consulta, totalconsulta * sizeof(agendar));
+            if(temp != NULL) {
+            consulta = temp;
+                        }else {
+                        printf("Erro ao realocar memória!\n");}
+            break;
+        case 7:
+            ordenarConsulta(consulta,totalconsulta);
+            break;
         }
-    } while (escolha != 5);
+    } while (escolha !=8);
 
     free(passiente);
     free(doutor);
+    free(consulta);
 
     return 0;
 }
