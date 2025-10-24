@@ -1,0 +1,145 @@
+/*
+
+exer9
+ int ma, tel, n, op;
+    char linha[100];
+    FILE *entrada, *saida;
+    printf("1 - Ler dados pelo teclado\n");
+    printf("2 - Ler dados de um arquivo (entrada.txt)\n");
+    printf("Escolha uma opcao: ");
+    scanf("%d", &op);
+
+    saida = fopen("saida.txt", "w");
+    if (saida == NULL) {
+        printf("Erro ao criar saida.txt\n");
+        return 1;
+    }
+
+    switch (op) {
+        case 1:
+            printf("Quantos alunos deseja cadastrar? ");
+            scanf("%d", &n);
+
+            for (int i = 1; i <= n; i++) {
+                printf("Digite a matricula e o telefone do aluno %d: ", i);
+                scanf("%d %d", &ma, &tel);
+                fprintf(saida, "%d %d\n", ma, tel);
+            }
+            break;
+
+        case 2:
+            entrada = fopen("entrada.txt", "r");
+            if (entrada == NULL) {
+                printf("Erro: arquivo entrada.txt nao encontrado!\n");
+                fclose(saida);
+                return 1;
+            }
+            while (fgets(linha, sizeof(linha), entrada) != NULL) {
+                fprintf(saida, "%s", linha);
+            }
+
+            fclose(entrada);
+            printf("Dados copiados de entrada.txt para saida.txt com sucesso!\n");
+            break;
+
+        default:
+            printf("Opcao invalida!\n");
+            fclose(saida);
+            return 1;
+    }
+
+    fclose(saida);
+    printf("Arquivo saida.txt criado com sucesso!\n");*/
+
+
+/*exer 8
+
+float qtdVeiculos, valorAluguel;
+    float faturamentoAnual, multaMensal, manutencaoAnual;
+
+    printf("Digite a quantidade de veiculos e o valor do aluguel: ");
+    scanf("%f %f", &qtdVeiculos, &valorAluguel);
+
+    float alugadosMes = qtdVeiculos / 3.0;
+    float faturamentoMensal = alugadosMes * valorAluguel;
+    faturamentoAnual = faturamentoMensal * 12;
+
+    float atrasadosMes = alugadosMes / 10.0;
+    multaMensal = atrasadosMes * valorAluguel * 0.20;
+    float veiculosManutencao = qtdVeiculos * 0.02;
+    manutencaoAnual = veiculosManutencao * 600.0;
+
+    fprintf(arq, "%.2f\n", faturamentoAnual);
+    fprintf(arq, "%.2f\n", multaMensal);
+    fprintf(arq, "%.2f\n", manutencaoAnual);
+
+    fclose(arq);
+
+    */
+/*exer5
+
+FILE *arq1=fopen("arquivo1.txt","w");
+    char linha[100],linha2[100];
+    fprintf(arq1,"nomes;\n");
+    fprintf(arq1,"anthony freitas \n lucas \n arthur \n felipe");
+    if (arq1 == NULL) {
+        printf("Erro ao abrir o arquivo!\n");
+        return 1;
+    }
+    fclose(arq1);
+    FILE *arq2=fopen("arquivo2.txt","w");
+    fprintf(arq2,"idades;\n");
+    fprintf(arq2,"18 anos \n 19 anos \n 18 anos \n 25 anos");
+    if (arq2 == NULL) {
+        printf("Erro ao abrir o arquivo!\n");
+        return 1;
+    }
+    fclose(arq2);
+
+    FILE *arq3=fopen("arquivo3.txt","w+");
+    arq1=fopen("arquivo1.txt","r");
+    arq2=fopen("arquivo2.txt","r");
+    if (arq3 == NULL) {
+        printf("Erro ao abrir o arquivo!\n");
+        return 1;
+    }
+
+    while (fgets(linha, sizeof(linha), arq1) != NULL) {
+        fprintf(arq3,"%s",linha); // imprime a linha lida
+    }
+    while (fgets(linha2, sizeof(linha2), arq2) != NULL) {
+        fprintf(arq3,"%s",linha2); // imprime a linha lida
+    }
+
+    fclose(arq3);
+
+
+/*
+exer4
+FILE *arq=fopen("dado.txt","w");
+    char c,linha2[100];
+    int linha=0;
+    fprintf(arq,"linha um \n");
+    fprintf(arq,"linha dois \n");
+    fprintf(arq,"linha tres \n");
+    fprintf(arq,"linha quatro \n");
+    fclose(arq);
+
+    arq=fopen("dado.txt","r");
+    if (arq == NULL) {
+        printf("Erro ao abrir o arquivo!\n");
+        return 1;
+    }
+   while ((c = fgetc(arq)) != EOF){
+        if(c=='\n'){
+            linha++;
+        }
+    }
+    linha++;
+    rewind(arq);
+
+     while (fgets(linha2, sizeof(linha2), arq) != NULL) {
+        printf("%s", linha2); // imprime a linha lida
+    }printf("O arquivo possui %d linhas.\n", linha);
+
+    fclose(arq);*/
