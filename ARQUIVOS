@@ -1,5 +1,49 @@
-/*
+/*exer 10 
 
+#include <stdio.h>
+#include <stdlib.h>
+
+int main() {
+    FILE *arq;
+    float num, soma = 0, max, min;
+    int contador = 0;
+    arq = fopen("entrada.txt", "r");
+
+    if (fscanf(arq, "%f", &num) != 1) {
+
+        fclose(arq);
+        return 1;
+    }
+
+    max = min = num;  
+    soma = num;
+    contador = 1;
+
+
+    while (fscanf(arq, "%f", &num) == 1) {
+        soma += num;
+        contador++;
+
+        if (num > max)
+            max = num;
+        if (num < min)
+            min = num;
+    }
+
+    fclose(arq);
+
+    float media = soma / contador;
+
+    printf("%d\n", contador);
+    printf("%.2f\n", max);
+    printf(" %.2f\n", min);
+    printf("%.2f\n", media);
+    return 0;
+}
+*/
+
+
+/*
 exer9
  int ma, tel, n, op;
     char linha[100];
